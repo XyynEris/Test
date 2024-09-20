@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.min.css" rel="stylesheet">
+    <title>Calculator Example</title>
+</head>
+<body>
+    <ion-app>
+        <ion-content>
+            <ion-item>
+                <ion-label position="floating">First Number</ion-label>
+                <ion-input type="number" id="firstNumber" placeholder="Enter first number"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Second Number</ion-label>
+                <ion-input type="number" id="secondNumber" placeholder="Enter second number"></ion-input>
+            </ion-item>
+            <ion-button expand="full" onclick="calculate()">Calculate</ion-button>
+
+            <h2 id="result"></h2>
+        </ion-content>
+    </ion-app>
+
+    <script src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+    <script>
+        function calculate() {
+            const num1 = parseFloat(document.getElementById('firstNumber').value);
+            const num2 = parseFloat(document.getElementById('secondNumber').value);
+            let resultText = '';
+
+            if (isNaN(num1) || isNaN(num2)) {
+                resultText = 'Please enter valid numbers.';
+            } else {
+                const sum = num1 + num2;
+                const difference = num1 - num2;
+                const product = num1 * num2;
+                const quotient = num2 !== 0 ? (num1 / num2) : 'Cannot divide by zero';
+
+                resultText = `
+                    <strong>Results:</strong><br>
+                    Addition: ${sum}<br>
+                    Subtraction: ${difference}<br>
+                    Multiplication: ${product}<br>
+                    Division: ${quotient}
+                `;
+            }
+
+            document.getElementById('result').innerHTML = resultText;
+        }
+    </script>
+</body>
+</html>
