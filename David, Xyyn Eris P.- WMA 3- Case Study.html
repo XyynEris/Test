@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+  <title>Food Delivery Form</title>
+
+  <!--I chose grey color to decrease eye strain-->
+  <style>
+    ion-content {
+      --background: #404258;
+    }
+    ion-item { 
+      --background: #6B728E; /* Margin wasuse to seperate the different contents */
+      margin: 10px;
+    }
+    ion-text {
+        text-align: center; /* I centered the text and put margins to center it preperly */
+        margin-top: -10px; 
+        margin-left: 70px;
+        margin-bottom: 10px;
+    }
+    ion-button{
+      --background: #5f5f5f;
+    }
+  </style>
+
+</head>
+<body>
+  <ion-app>
+    <ion-header>
+    <!-- Chose Grey color for the background and centerelized the title to put emphasis on it-->
+      <ion-toolbar color="medium">
+        <ion-title style="text-align: center;">Food Delivery Form</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content>
+    <ion-item>
+        <ion-label position="floating">Delivery Address</ion-label>
+        <ion-input id="DA"></ion-input>
+    </ion-item>
+
+    <!-- Put the selec option at the very right-->
+    <ion-item>
+        <ion-label>Payment Method</ion-label>
+        <ion-select slot="end" placeholder="Select Payment Method" id="PM">
+            <ion-select-option value="Credit Card">Credit Card</ion-select-option>
+            <ion-select-option value="Cash On Delivery">Cash On Delivery</ion-select-option>
+            <ion-select-option value="Debit Card">Debit Card</ion-select-option>
+            <ion-select-option value="PayPal">PayPal</ion-select-option>
+            <ion-select-option value="Gcash">Gcash</ion-select-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-checkbox id="SPM">Save Payment Method</ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+        <ion-label position="floating">Food Price</ion-label>
+        <ion-input id="FP"></ion-input>
+    </ion-item>
+
+    <ion-item id="cashInput" style="display:none;">
+        <ion-label position="floating">Cash on Hand</ion-label>
+        <ion-input id="CH"></ion-input>
+    </ion-item>
+    
+    <!-- Use a div tag so that I could center the button-->
+    <div style="text-align: center;">
+      <ion-button expand="block" onclick="Submitted()">SUBMIT ORDER</ion-button>
+    </div>
+    <ion-item>
+        <ion-text id="res"></ion-text>
+    </ion-item>
+
+    </ion-content>
+  </ion-app>
+
+  <script>
+    document.getElementById('PM').addEventListener('ionChange', function() {
+        const selectedValue = this.value;
+        const cashInput = document.getElementById('cashInput');
+        cashInput.style.display = (selectedValue === 'Cash On Delivery') ? 'block' : 'none';
+    });
+
+    function Submitted() {
+        const DA = document.getElementById('DA').value
+        const PM= document.getElementById('PM').value
+        const SPM = document.getElementById('SPM')
+        const FP = parseFloat(document.getElementById('FP').value) || 0;
+        const CH = parseFloat(document.getElementById('CH').value) || 0;
+
+        let PMS = '';
+
+        if (SPM.checked) {
+             PMS += 'Payment method will be saved.';
+            } else {
+                PMS += 'Payment method was not saved.';
+            }
+
+        let changeMessage = '';
+            if (PM === 'Cash On Delivery') {
+            const change = CH - FP;
+            changeMessage = `<br> Change: ${change >= 0 ? change : 'Insufficient cash'}`;
+        }
+
+        document.getElementById('res').innerHTML = `<br> Address: ${DA} <br> Payment Method: ${PM} <br> Food Price: ${FP} <br> Cash on Hand: ${CH} ${changeMessage} <br> ${PMS} `;
+       
+    }
+  </script>
+</body>
+</html>

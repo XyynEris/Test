@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+  <title>Food Delivery Form</title>
+
+</head>
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Food Delivery Form</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content>
+    <ion-item>
+        <ion-label position="floating">Delivery Address</ion-label>
+        <ion-input id="DA"></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Payment Method</ion-label>
+        <ion-select placeholder="Select Payment Method" id="PM">
+            <ion-select-option value="CC">Credit Card</ion-select-option>
+            <ion-select-option value="CoD">Cash On Delivery</ion-select-option>
+            <ion-select-option value="DC">Debit Card</ion-select-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-checkbox id="SPM">Save Payment Method</ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+        <ion-label position="floating">Food Price</ion-label>
+        <ion-input id="FP"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" onclick="Submitted()" >SUBMIT ORDER</ion-button>
+
+    <ion-item>
+        <ion-text id="res"></ion-text>
+    </ion-item>
+
+    </ion-content>
+  </ion-app>
+
+  <script>
+    function Submitted() {
+      const DA = document.getElementById('DA').value
+      const PM= document.getElementById('PM').value
+      const SPM = document.getElementById('SPM')
+
+      let PMS = '';
+
+      if (SPM.checked) {
+        PMS += 'Payment method will be saved.';
+      }else{
+        PMS += 'Payment method was not saved.';
+      }
+      document.getElementById('res').innerHTML = `<br> Address: ${DA}<br> Payment Method: ${PM}<br>${PMS}`;
+
+    }
+  </script>
+</body>
+</html>
